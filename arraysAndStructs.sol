@@ -15,6 +15,9 @@ contract Arrays {
 
     Person[] public listOfPeople;
 
+    //memory specifies that the variable that will occupy the memory will stay there for short amount of time.
+    //value of variable specified with memory keyword can change the value but we cannot change the value of a variable with calldata
+    // memory variables can be modified, calldata variables cannot be modified.
     function addPerson(string memory _name, uint _index) public {
         listOfPeople.push(Person(_name, _index));
     }
