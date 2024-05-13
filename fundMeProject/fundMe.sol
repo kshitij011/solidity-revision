@@ -5,6 +5,11 @@ import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/interfaces/Ag
 
 contract FundMe {
     uint public minDollar = 5 * (10 ** 18); // which is 5 * 1e18
+
+    address[] public funders;
+
+    mapping(address funder => uint amountFunded) public addressToAmountFunded;
+
     function fund() public payable {
         //require keyword checks that the minimum amount that has to be sent is 1*10**18 wei
         // 1 ETH = 1000000000000000000 wei = 1 * 10 ** 18
@@ -17,6 +22,10 @@ contract FundMe {
             getConversionRate(msg.value) >= minDollar,
             "didn't send enough Dollar"
         );
+        funders.push(msg.sender);
+        addressToAmountFunded[msg.sender] =
+            addressToAmountFunded[msg.sender] +
+            msg.value;
     }
 
     function getPrice() public view returns (uint) {
